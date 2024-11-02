@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Application</title>
+</head>
+
+<body>
+<div th:remove="${users.size() == 0} ? all">
+  <h1>User list</h1>
+  <table width = "100%" border = "2">
+    <thead>
+    <tr align = "center">
+      <th>Name</th>
+      <th>Last name</th>
+      <th>E-mail</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr align = "left" th:each="user : ${users}">
+      <td th:text="${user.getFirstName()}"></td>
+      <td th:text="${user.getLastName()}"></td>
+      <td th:text="${user.getEmail()}"></td>
+      <td>
+        <form action="/users/edit" method="post" style="display:inline;">
+          <input type="hidden" name="id" th:value="${user.getId()}"/>
+          <input type="text" name="name" th:value="${user.getFirstName()}"/>
+          <input type="text" name="last_name" th:value="${user.getLastName()}"/>
+          <input type="text" name="email" th:value="${user.getEmail()}"/>
+          <button type="submit">Edit</button>
+        </form>
+        <form action="/users/delete" method="post" style="display:inline;">
+          <input type="hidden" name="id" th:value="${user.getId()}"/>
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Add user</h2>
+<form action="/users/add" method="post">
+  <input type="text" name="name" placeholder="Name" required/>
+  <input type="text" name="last_name" placeholder="Last name" required/>
+  <input type="email" name="email" placeholder="E-mail" required/>
+  <button type="submit">Add</button>
+</form>
+
+</body>
+</html>
